@@ -1,6 +1,7 @@
 import argparse
 import json
 from pathlib import Path
+from wordfreq import zipf_frequency
 
 from openjlpt import get_vocab
 
@@ -15,6 +16,8 @@ def to_card(v, max_examples):
         card["ex"] = [{"ja": e.ja, "en": e.en} for e in examples]
     return card
 
+def frequency(card):
+    return -zipf_frequency(card["w"], "ja")
 
 def main():
     parser = argparse.ArgumentParser()
@@ -22,7 +25,11 @@ def main():
     parser.add_argument("--max-examples", type=int, default=2)
     args = parser.parse_args()
 
-    cards = [to_card(v, args.max_examples) for lvl in args.levels for v in get_vocab(lvl)]
+    cards = [
+        c
+        for lvl in args.levels
+        for c in sorted((to_card(v, args.max_examples) for v in get_vocab(lvl)), key=frequency)
+    ]
     ids = [c["id"] for c in cards]
     assert len(ids) == len(set(ids)), "identifiants en double"
 
