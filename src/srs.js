@@ -13,16 +13,17 @@ export const GRADES = [
 
 const today = () => new Date().toLocaleDateString('sv')
 
-function resetDaily(progress) {
-  if (progress.daily.date !== today()) progress.daily = { date: today(), newCount: 0 }
+function newToday(progress, deckId) {
+  if (progress.daily.date !== today() || !progress.daily.new) progress.daily = { date: today(), new: {} }
+  return progress.daily.new[deckId] ?? 0
 }
 
-export function nextCard(deck, progress, now = new Date()) {
-  resetDaily(progress)
+export function nextCard(deck, deckId, progress, now = new Date()) {
+  const newCount = newToday(progress, deckId)
   const seen = deck.filter((c) => progress.cards[c.id])
   const byDue = (a, b) => new Date(progress.cards[a.id].due) - new Date(progress.cards[b.id].due)
   const due = seen.filter((c) => new Date(progress.cards[c.id].due) <= now).sort(byDue)
-  const fresh = progress.daily.newCount < NEW_PER_DAY ? deck.find((c) => !progress.cards[c.id]) : null
+  const fresh = newCount < NEW_PER_DAY ? deck.find((c) => !progress.cards[c.id]) : null
   const soon = seen
     .filter((c) => new Date(progress.cards[c.id].due) - now < LEARN_AHEAD_MS)
     .sort(byDue)
@@ -30,7 +31,7 @@ export function nextCard(deck, progress, now = new Date()) {
   return {
     card: due[0] ?? fresh ?? soon[0] ?? null,
     dueCount: due.length,
-    newLeft: fresh ? NEW_PER_DAY - progress.daily.newCount : 0,
+    newLeft: fresh ? NEW_PER_DAY - newCount : 0,
   }
 }
 
@@ -39,9 +40,9 @@ export function preview(state, now = new Date()) {
   return GRADES.map((g) => ({ ...g, due: outcomes[g.rating].card.due }))
 }
 
-export function grade(card, progress, rating, now = new Date()) {
+export function grade(card, deckId, progress, rating, now = new Date()) {
   const state = progress.cards[card.id]
-  if (!state) progress.daily.newCount += 1
+  if (!state) progress.daily.new[deckId] = newToday(progress, deckId) + 1
   progress.cards[card.id] = scheduler.next(state ?? createEmptyCard(now), now, rating).card
 }
 

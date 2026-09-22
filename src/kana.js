@@ -4,7 +4,5 @@ const HIRAGANA = [...'あいうえおかきくけこさしすせそたちつて�
 
 const toCard = (kana) => ({ id: `kana:${kana}`, w: kana, r: kana, m: [] })
 
-export const kanaCards = [
-  ...HIRAGANA.map(toCard),
-  ...HIRAGANA.map((h) => toCard(toKatakana(h))),
-]
+export const hiraganaCards = HIRAGANA.map(toCard)
+export const katakanaCards = HIRAGANA.map((h) => toCard(toKatakana(h)))

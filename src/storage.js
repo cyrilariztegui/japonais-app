@@ -5,7 +5,7 @@ export function loadProgress() {
     const saved = JSON.parse(localStorage.getItem(KEY))
     if (saved?.cards) return saved
   } catch {}
-  return { cards: {}, daily: { date: '', newCount: 0 } }
+  return { cards: {}, daily: { date: '', new: {} }, deck: 'hiragana' }
 }
 
 export function saveProgress(progress) {
