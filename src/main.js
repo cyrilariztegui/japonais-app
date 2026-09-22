@@ -1,10 +1,21 @@
 import './style.css'
-import { speak } from './audio.js'
+import { speak, listen } from './audio.js'
+import { evaluate, errorMessage } from './pronunciation.js'
 import { hiraganaCards, katakanaCards } from './kana.js'
 import { listeningCards } from './listening.js'
 import { loadProgress, saveProgress, exportProgress, importProgress, backupIsStale } from './storage.js'
 import { nextCard, preview, grade, streak } from './srs.js'
 import { tabbar, homeView, sessionView, settingsView } from './views.js'
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW({
+  immediate: true,
+  onRegisteredSW(url, registration) {
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') registration?.update()
+    })
+  },
+})
 
 const app = document.querySelector('#app')
 let progress = loadProgress()
@@ -14,7 +25,7 @@ const decks = [
   { id: 'vocab', label: 'Mots', cards: [] },
   { id: 'listening', label: 'Écoute', cards: [] },
 ]
-const state = { view: 'home', scope: [], current: null, revealed: false, done: 0, message: '' }
+const state = { view: 'home', scope: [], current: null, revealed: false, done: 0, message: '', recognition: { status: 'idle' } }
 
 async function loadData(name) {
   const res = await fetch(`${import.meta.env.BASE_URL}data/${name}.json`)
@@ -52,6 +63,7 @@ function startSession(scope) {
 function advance() {
   state.current = pickNext()
   state.revealed = false
+  state.recognition = { status: 'idle' }
   render()
   if (state.current?.card.listen && progress.settings.autoplay) speakCard()
 }
@@ -87,9 +99,25 @@ function render() {
       remaining: remaining(),
       options: card && state.revealed ? preview(progress.cards[card.id]) : [],
       settings: progress.settings,
+      recognition: state.recognition,
     })
   }
   app.dataset.view = state.view
+}
+
+async function repeat() {
+  const { card } = state.current
+  state.recognition = { status: 'listening' }
+  render()
+  try {
+    const alternatives = await listen()
+    if (state.current?.card !== card) return
+    state.recognition = { status: 'done', ...evaluate(alternatives, card) }
+  } catch (err) {
+    if (state.current?.card !== card) return
+    state.recognition = { status: 'error', message: errorMessage(err.message) }
+  }
+  render()
 }
 
 function show(view) {
@@ -107,6 +135,7 @@ async function onClick(btn) {
   if (btn.matches('.reveal')) return reveal()
   if (btn.matches('.listen, .replay')) return speakCard()
   if (btn.matches('.slow')) return speakCard(0.6)
+  if (btn.matches('.repeat')) return repeat()
   if (btn.matches('.example')) return speak(btn.querySelector('[lang]').textContent)
   if (btn.matches('.grade')) {
     grade(state.current.card, state.current.deck.id, progress, Number(btn.dataset.rating))

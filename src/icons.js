@@ -8,6 +8,7 @@ export const icons = {
   sound: svg('<path d="M4 10v4h4l5 4V6L8 10z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/>'),
   play: svg('<path d="M8 5l11 7-11 7z" fill="currentColor"/>'),
   arrow: svg('<path d="M5 12h14M13 6l6 6-6 6"/>'),
+  mic: svg('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>'),
   minus: svg('<path d="M6 12h12"/>'),
   plus: svg('<path d="M12 6v12M6 12h12"/>'),
 }

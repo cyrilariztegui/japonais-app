@@ -711,6 +711,53 @@ button:disabled {
   line-height: 1.5;
 }
 
+.repeat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.repeat.active {
+  color: var(--seal);
+  border-color: var(--seal);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.heard {
+  display: grid;
+  gap: 0.25rem;
+  align-self: stretch;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--muted);
+  background: var(--surface-low);
+  border-radius: 0.5rem;
+}
+
+.heard strong {
+  color: var(--ink);
+}
+
+.heard.good strong {
+  color: var(--green);
+}
+
+.heard.miss strong {
+  color: var(--seal);
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;

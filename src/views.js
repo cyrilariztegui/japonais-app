@@ -1,6 +1,19 @@
 import { icons } from './icons.js'
 import { toFrench, sentenceToFrench } from './phonetic.js'
 import { formatDelay } from './srs.js'
+import { canListen } from './audio.js'
+
+const LEVELS = { good: 'Bien reconnu', close: 'Presque', miss: 'Pas reconnu' }
+
+function repeatBlock(rec) {
+  const listening = rec.status === 'listening'
+  return `
+    <button class="repeat ${listening ? 'active' : ''}" ${listening ? 'disabled' : ''}>
+      ${icons.mic}<span>${listening ? 'Je t\'écoute…' : 'Répéter à voix haute'}</span>
+    </button>
+    ${rec.status === 'done' ? `<p class="heard ${rec.level}"><strong>${LEVELS[rec.level]}</strong><span>Entendu : <span lang="ja">${rec.heard || '(rien)'}</span></span></p>` : ''}
+    ${rec.status === 'error' ? `<p class="heard">${rec.message}</p>` : ''}`
+}
 
 const DECK_INFO = {
   hiragana: { glyph: 'あ', subtitle: "L'alphabet de base" },
@@ -73,7 +86,7 @@ function wordFace(card, revealed, settings) {
         </button>` : ''}` : '<p class="hint">Touche le caractère pour voir la réponse</p>'}`
 }
 
-function listeningFace(card, revealed, settings) {
+function listeningFace(card, revealed, settings, recognition) {
   const { prev, w, r, m } = card
   return `
     ${prev ? `<p class="prev"><span lang="ja">${prev.ja}</span><span>${prev.en}</span></p>` : ''}
@@ -83,7 +96,8 @@ function listeningFace(card, revealed, settings) {
       <p class="reading small" lang="ja">${r}</p>
       ${settings.phonetic ? `<p class="phonetic">${sentenceToFrench(r)}</p>` : ''}
       <i class="rule"></i>
-      <p class="meaning">${m[0]}</p>` : '<p class="hint">Écoute, répète à voix haute, puis vérifie</p>'}`
+      <p class="meaning">${m[0]}</p>
+      ${canListen ? repeatBlock(recognition) : ''}` : '<p class="hint">Écoute, répète à voix haute, puis vérifie</p>'}`
 }
 
 function answerBar(card, revealed, options) {
@@ -97,7 +111,7 @@ function answerBar(card, revealed, options) {
     .join('')}</nav>`
 }
 
-export function sessionView({ deck, card, revealed, done, remaining, options, settings }) {
+export function sessionView({ deck, card, revealed, done, remaining, options, settings, recognition }) {
   const percent = Math.round((done / Math.max(done + remaining, 1)) * 100)
   const top = `
     <header class="session-top">
@@ -122,7 +136,7 @@ export function sessionView({ deck, card, revealed, done, remaining, options, se
           <span class="chip">${chip}</span>
           <button class="listen">${icons.sound}<span>Écouter</span></button>
         </div>
-        ${card.listen ? listeningFace(card, revealed, settings) : wordFace(card, revealed, settings)}
+        ${card.listen ? listeningFace(card, revealed, settings, recognition) : wordFace(card, revealed, settings)}
       </article>
     </main>
     ${answerBar(card, revealed, options)}`
@@ -176,6 +190,7 @@ export function settingsView({ settings, cardCount, lastExport, message }) {
       </section>
       <footer class="credits">
         <p>Données : OpenJLPT, JMdict et KANJIDIC (EDRDG), phrases Tatoeba, sous licences Creative Commons BY-SA. Fréquences : wordfreq.</p>
+        <p>Version du ${__BUILD__}</p>
       </footer>
     </main>`
 }
