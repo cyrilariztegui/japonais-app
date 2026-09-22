@@ -102,6 +102,7 @@ button:focus-visible {
 
 .example {
   margin-top: 1rem;
+  padding: 0;
   font-size: 1.25rem;
   line-height: 1.7;
   text-align: left;
@@ -114,8 +115,12 @@ button:focus-visible {
 
 .actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
+}
+
+.grades {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
 }
 
 .actions button {
@@ -125,7 +130,8 @@ button:focus-visible {
   border-radius: 0.75rem;
 }
 
-.actions .next {
+.actions .reveal,
+.actions .grade[data-rating='3'] {
   background: var(--ink);
   color: var(--paper);
   border-color: var(--ink);
@@ -135,13 +141,39 @@ button:focus-visible {
   opacity: 0.4;
 }
 
+.romaji {
+  color: var(--muted);
+  font-size: 1.125rem;
+  letter-spacing: 0.02em;
+}
+
 .error {
   align-self: center;
   line-height: 1.5;
 }
 
-.romaji {
+.status {
+  text-align: center;
   color: var(--muted);
-  font-size: 1.125rem;
-  letter-spacing: 0.02em;
+  font-size: 0.9375rem;
+}
+
+.grades button {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem 0.25rem;
+  font-size: 0.9375rem;
+}
+
+.grades small {
+  font-size: 0.8125rem;
+  opacity: 0.75;
+}
+
+.done {
+  text-align: center;
+}
+
+.done-title {
+  font-size: 1.5rem;
 }
