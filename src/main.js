@@ -2,11 +2,11 @@ import './style.css'
 import { speak, canSpeak } from './audio.js'
 import { toFrench } from './phonetic.js'
 import { hiraganaCards, katakanaCards } from './kana.js'
-import { loadProgress, saveProgress } from './storage.js'
+import { loadProgress, saveProgress, exportProgress, importProgress, backupIsStale } from './storage.js'
 import { nextCard, preview, grade, formatDelay } from './srs.js'
 
 const app = document.querySelector('#app')
-const progress = loadProgress()
+let progress = loadProgress()
 const decks = [
   { id: 'hiragana', label: 'Hiragana', cards: hiraganaCards },
   { id: 'katakana', label: 'Katakana', cards: katakanaCards },
@@ -36,7 +36,10 @@ function header() {
   return `
     <header>
       <nav class="tabs">${tabs}</nav>
-      <p class="status">${dueCount} à réviser, ${newLeft} nouveaux</p>
+      <div class="status-row">
+        <p class="status">${dueCount} à réviser, ${newLeft} nouveaux</p>
+        <button class="open-backup ${backupIsStale(progress) ? 'stale' : ''}">Sauvegarde</button>
+      </div>
     </header>`
 }
 
@@ -93,7 +96,9 @@ function reveal() {
 app.addEventListener('click', (e) => {
   const btn = e.target.closest('button')
   if (!btn) return
-  if (btn.matches('.tab')) {
+  if (btn.matches('.open-backup')) {
+    openBackup()
+  } else if (btn.matches('.tab')) {
     deck = decks.find((d) => d.id === btn.dataset.deck)
     progress.deck = deck.id
     saveProgress(progress)
@@ -105,6 +110,53 @@ app.addEventListener('click', (e) => {
     grade(session.card, deck.id, progress, Number(btn.dataset.rating))
     saveProgress(progress)
     advance()
+  }
+})
+
+document.body.insertAdjacentHTML('beforeend', `
+  <dialog class="backup">
+    <h2>Sauvegarde</h2>
+    <p class="backup-info"></p>
+    <button class="export">Exporter la progression</button>
+    <label class="import">Importer une sauvegarde<input type="file" accept="application/json,.json" hidden /></label>
+    <p class="backup-message" role="status"></p>
+    <button class="close">Fermer</button>
+  </dialog>`)
+
+const backup = document.querySelector('.backup')
+const backupMessage = backup.querySelector('.backup-message')
+
+function openBackup() {
+  const count = Object.keys(progress.cards).length
+  const last = progress.lastExport ? new Date(progress.lastExport).toLocaleDateString('fr') : 'jamais'
+  backup.querySelector('.backup-info').textContent = `${count} cartes étudiées. Dernière sauvegarde : ${last}.`
+  backupMessage.textContent = ''
+  backup.showModal()
+}
+
+backup.addEventListener('click', async (e) => {
+  if (e.target.matches('.close')) backup.close()
+  if (!e.target.matches('.export')) return
+  try {
+    await exportProgress(progress)
+    backupMessage.textContent = 'Progression exportée.'
+    render()
+  } catch (err) {
+    if (err.name !== 'AbortError') backupMessage.textContent = `Export impossible : ${err.message}`
+  }
+})
+
+backup.querySelector('input').addEventListener('change', async (e) => {
+  const file = e.target.files[0]
+  e.target.value = ''
+  if (!file || !confirm('Remplacer la progression actuelle par cette sauvegarde ?')) return
+  try {
+    progress = await importProgress(file)
+    deck = decks.find((d) => d.id === progress.deck) ?? decks[0]
+    backupMessage.textContent = 'Sauvegarde importée.'
+    advance()
+  } catch (err) {
+    backupMessage.textContent = `Import impossible : ${err.message}`
   }
 })
 

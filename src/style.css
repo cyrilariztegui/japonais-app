@@ -207,3 +207,73 @@ header {
 .error {
   grid-row: 2;
 }
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.open-backup {
+  font-size: 0.9375rem;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.open-backup.stale {
+  color: var(--seal);
+}
+
+.backup {
+  width: min(24rem, calc(100% - 3rem));
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.backup::backdrop {
+  background: rgb(0 0 0 / 0.4);
+}
+
+.backup[open] {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.backup h2 {
+  font-size: 1.25rem;
+}
+
+.backup-info,
+.backup-message {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.backup-message:empty {
+  display: none;
+}
+
+.backup .export,
+.backup .import {
+  padding: 0.875rem;
+  text-align: center;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  cursor: pointer;
+}
+
+.backup .export {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.backup .close {
+  padding: 0.5rem;
+  color: var(--muted);
+}
