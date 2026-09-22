@@ -1,0 +1,608 @@
+[
+ {
+  "id": "self-1",
+  "situation": "Se présenter",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "はじめまして。シリルです。フランスから来ました。",
+    "r": "はじめまして シリル です フランス から きました",
+    "en": "Nice to meet you. I'm Cyril. I came from France."
+   },
+   {
+    "s": "B",
+    "ja": "はじめまして。田中です。よろしくお願いします。",
+    "r": "はじめまして たなか です よろしく おねがい します",
+    "en": "Nice to meet you. I'm Tanaka. Pleased to meet you."
+   },
+   {
+    "s": "A",
+    "ja": "こちらこそ、よろしくお願いします。",
+    "r": "こちらこそ よろしく おねがい します",
+    "en": "Likewise, pleased to meet you."
+   }
+  ]
+ },
+ {
+  "id": "self-2",
+  "situation": "Se présenter",
+  "lines": [
+   {
+    "s": "B",
+    "ja": "学生ですか。",
+    "r": "がくせい です か",
+    "en": "Are you a student?"
+   },
+   {
+    "s": "A",
+    "ja": "はい、大学院生です。",
+    "r": "はい だいがくいんせい です",
+    "en": "Yes, I'm a graduate student."
+   },
+   {
+    "s": "B",
+    "ja": "専門は何ですか。",
+    "r": "せんもん は なん です か",
+    "en": "What is your field?"
+   },
+   {
+    "s": "A",
+    "ja": "バイオインフォマティクスです。",
+    "r": "バイオインフォマティクス です",
+    "en": "Bioinformatics."
+   }
+  ]
+ },
+ {
+  "id": "self-3",
+  "situation": "Se présenter",
+  "lines": [
+   {
+    "s": "B",
+    "ja": "日本語が上手ですね。",
+    "r": "にほんご が じょうず です ね",
+    "en": "Your Japanese is good."
+   },
+   {
+    "s": "A",
+    "ja": "いいえ、まだまだです。",
+    "r": "いいえ まだまだ です",
+    "en": "No, I still have a long way to go."
+   },
+   {
+    "s": "B",
+    "ja": "日本は初めてですか。",
+    "r": "にほん は はじめて です か",
+    "en": "Is this your first time in Japan?"
+   },
+   {
+    "s": "A",
+    "ja": "はい、初めてです。",
+    "r": "はい はじめて です",
+    "en": "Yes, it's my first time."
+   }
+  ]
+ },
+ {
+  "id": "konbini-1",
+  "situation": "Au konbini",
+  "lines": [
+   {
+    "s": "B",
+    "ja": "いらっしゃいませ。",
+    "r": "いらっしゃいませ",
+    "en": "Welcome."
+   },
+   {
+    "s": "B",
+    "ja": "袋はご利用ですか。",
+    "r": "ふくろ は ごりよう です か",
+    "en": "Would you like a bag?"
+   },
+   {
+    "s": "A",
+    "ja": "いいえ、大丈夫です。",
+    "r": "いいえ だいじょうぶ です",
+    "en": "No, I'm fine."
+   }
+  ]
+ },
+ {
+  "id": "konbini-2",
+  "situation": "Au konbini",
+  "lines": [
+   {
+    "s": "B",
+    "ja": "お弁当、温めますか。",
+    "r": "おべんとう あたためます か",
+    "en": "Shall I heat up your bento?"
+   },
+   {
+    "s": "A",
+    "ja": "はい、お願いします。",
+    "r": "はい おねがい します",
+    "en": "Yes, please."
+   },
+   {
+    "s": "B",
+    "ja": "お箸はおつけしますか。",
+    "r": "おはし は おつけ します か",
+    "en": "Would you like chopsticks?"
+   },
+   {
+    "s": "A",
+    "ja": "はい、ください。",
+    "r": "はい ください",
+    "en": "Yes, please."
+   }
+  ]
+ },
+ {
+  "id": "konbini-3",
+  "situation": "Au konbini",
+  "lines": [
+   {
+    "s": "B",
+    "ja": "ポイントカードはお持ちですか。",
+    "r": "ポイントカード は おもち です か",
+    "en": "Do you have a point card?"
+   },
+   {
+    "s": "A",
+    "ja": "いいえ、持っていません。",
+    "r": "いいえ もって いません",
+    "en": "No, I don't have one."
+   },
+   {
+    "s": "B",
+    "ja": "全部で五百円です。",
+    "r": "ぜんぶ で ごひゃく えん です",
+    "en": "That's 500 yen in total."
+   },
+   {
+    "s": "A",
+    "ja": "カードで払えますか。",
+    "r": "カード で はらえます か",
+    "en": "Can I pay by card?"
+   }
+  ]
+ },
+ {
+  "id": "resto-1",
+  "situation": "Au restaurant",
+  "lines": [
+   {
+    "s": "B",
+    "ja": "何名様ですか。",
+    "r": "なんめいさま です か",
+    "en": "How many people?"
+   },
+   {
+    "s": "A",
+    "ja": "一人です。",
+    "r": "ひとり です",
+    "en": "Just one."
+   },
+   {
+    "s": "B",
+    "ja": "こちらへどうぞ。",
+    "r": "こちら へ どうぞ",
+    "en": "This way, please."
+   }
+  ]
+ },
+ {
+  "id": "resto-2",
+  "situation": "Au restaurant",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "すみません、メニューをください。",
+    "r": "すみません メニュー を ください",
+    "en": "Excuse me, may I have the menu?"
+   },
+   {
+    "s": "A",
+    "ja": "これは何ですか。",
+    "r": "これ は なん です か",
+    "en": "What is this?"
+   },
+   {
+    "s": "B",
+    "ja": "豚肉の料理です。",
+    "r": "ぶたにく の りょうり です",
+    "en": "It's a pork dish."
+   },
+   {
+    "s": "A",
+    "ja": "じゃあ、これをお願いします。",
+    "r": "じゃあ これ を おねがい します",
+    "en": "Then I'll have this, please."
+   }
+  ]
+ },
+ {
+  "id": "resto-3",
+  "situation": "Au restaurant",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "お水をください。",
+    "r": "おみず を ください",
+    "en": "Water, please."
+   },
+   {
+    "s": "A",
+    "ja": "お会計をお願いします。",
+    "r": "おかいけい を おねがい します",
+    "en": "The bill, please."
+   },
+   {
+    "s": "B",
+    "ja": "千二百円です。",
+    "r": "せんにひゃく えん です",
+    "en": "That's 1,200 yen."
+   },
+   {
+    "s": "A",
+    "ja": "ごちそうさまでした。",
+    "r": "ごちそうさま でした",
+    "en": "Thank you for the meal."
+   }
+  ]
+ },
+ {
+  "id": "cafe-1",
+  "situation": "Au café",
+  "lines": [
+   {
+    "s": "B",
+    "ja": "ご注文はお決まりですか。",
+    "r": "ごちゅうもん は おきまり です か",
+    "en": "Are you ready to order?"
+   },
+   {
+    "s": "A",
+    "ja": "コーヒーを一つお願いします。",
+    "r": "コーヒー を ひとつ おねがい します",
+    "en": "One coffee, please."
+   },
+   {
+    "s": "B",
+    "ja": "ホットとアイス、どちらにしますか。",
+    "r": "ホット と アイス どちら に します か",
+    "en": "Hot or iced?"
+   },
+   {
+    "s": "A",
+    "ja": "ホットでお願いします。",
+    "r": "ホット で おねがい します",
+    "en": "Hot, please."
+   }
+  ]
+ },
+ {
+  "id": "cafe-2",
+  "situation": "Au café",
+  "lines": [
+   {
+    "s": "B",
+    "ja": "サイズはどうしますか。",
+    "r": "サイズ は どう します か",
+    "en": "What size would you like?"
+   },
+   {
+    "s": "A",
+    "ja": "小さいのをお願いします。",
+    "r": "ちいさい の を おねがい します",
+    "en": "A small one, please."
+   },
+   {
+    "s": "B",
+    "ja": "店内でお召し上がりですか。",
+    "r": "てんない で おめしあがり です か",
+    "en": "Is it for here?"
+   },
+   {
+    "s": "A",
+    "ja": "いいえ、持ち帰りで。",
+    "r": "いいえ もちかえり で",
+    "en": "No, to go."
+   }
+  ]
+ },
+ {
+  "id": "gare-1",
+  "situation": "À la gare",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "すみません、渋谷はどの電車ですか。",
+    "r": "すみません しぶや は どの でんしゃ です か",
+    "en": "Excuse me, which train goes to Shibuya?"
+   },
+   {
+    "s": "B",
+    "ja": "山手線です。三番線ですよ。",
+    "r": "やまのてせん です さんばんせん です よ",
+    "en": "The Yamanote Line. It's platform 3."
+   },
+   {
+    "s": "A",
+    "ja": "ありがとうございます。",
+    "r": "ありがとう ございます",
+    "en": "Thank you very much."
+   }
+  ]
+ },
+ {
+  "id": "gare-2",
+  "situation": "À la gare",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "この電車は東京駅に止まりますか。",
+    "r": "この でんしゃ は とうきょうえき に とまります か",
+    "en": "Does this train stop at Tokyo Station?"
+   },
+   {
+    "s": "B",
+    "ja": "いいえ、止まりません。次の電車に乗ってください。",
+    "r": "いいえ とまりません つぎ の でんしゃ に のって ください",
+    "en": "No, it doesn't. Please take the next train."
+   }
+  ]
+ },
+ {
+  "id": "gare-3",
+  "situation": "À la gare",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "切符はどこで買えますか。",
+    "r": "きっぷ は どこ で かえます か",
+    "en": "Where can I buy a ticket?"
+   },
+   {
+    "s": "B",
+    "ja": "あそこの機械で買えますよ。",
+    "r": "あそこ の きかい で かえます よ",
+    "en": "You can buy one at that machine over there."
+   },
+   {
+    "s": "A",
+    "ja": "いくらですか。",
+    "r": "いくら です か",
+    "en": "How much is it?"
+   },
+   {
+    "s": "B",
+    "ja": "二百円です。",
+    "r": "にひゃく えん です",
+    "en": "It's 200 yen."
+   }
+  ]
+ },
+ {
+  "id": "chemin-1",
+  "situation": "Demander son chemin",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "すみません、駅はどこですか。",
+    "r": "すみません えき は どこ です か",
+    "en": "Excuse me, where is the station?"
+   },
+   {
+    "s": "B",
+    "ja": "まっすぐ行って、二つ目の角を右です。",
+    "r": "まっすぐ いって ふたつめ の かど を みぎ です",
+    "en": "Go straight, then turn right at the second corner."
+   },
+   {
+    "s": "A",
+    "ja": "遠いですか。",
+    "r": "とおい です か",
+    "en": "Is it far?"
+   },
+   {
+    "s": "B",
+    "ja": "いいえ、歩いて五分ぐらいです。",
+    "r": "いいえ あるいて ごふん ぐらい です",
+    "en": "No, about five minutes on foot."
+   }
+  ]
+ },
+ {
+  "id": "chemin-2",
+  "situation": "Demander son chemin",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "トイレはどこですか。",
+    "r": "トイレ は どこ です か",
+    "en": "Where is the toilet?"
+   },
+   {
+    "s": "B",
+    "ja": "二階にあります。",
+    "r": "にかい に あります",
+    "en": "It's on the second floor."
+   }
+  ]
+ },
+ {
+  "id": "chemin-3",
+  "situation": "Demander son chemin",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "この近くにコンビニはありますか。",
+    "r": "この ちかく に コンビニ は あります か",
+    "en": "Is there a convenience store near here?"
+   },
+   {
+    "s": "B",
+    "ja": "ええ、あの銀行の隣にありますよ。",
+    "r": "ええ あの ぎんこう の となり に あります よ",
+    "en": "Yes, there's one next to that bank."
+   },
+   {
+    "s": "A",
+    "ja": "どうもありがとうございます。",
+    "r": "どうも ありがとう ございます",
+    "en": "Thank you very much."
+   }
+  ]
+ },
+ {
+  "id": "labo-1",
+  "situation": "Au labo",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "おはようございます。",
+    "r": "おはよう ございます",
+    "en": "Good morning."
+   },
+   {
+    "s": "B",
+    "ja": "おはようございます。今日も頑張りましょう。",
+    "r": "おはよう ございます きょう も がんばりましょう",
+    "en": "Good morning. Let's do our best today too."
+   }
+  ]
+ },
+ {
+  "id": "labo-2",
+  "situation": "Au labo",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "すみません、ちょっと質問してもいいですか。",
+    "r": "すみません ちょっと しつもん して も いい です か",
+    "en": "Excuse me, may I ask a quick question?"
+   },
+   {
+    "s": "B",
+    "ja": "はい、どうぞ。",
+    "r": "はい どうぞ",
+    "en": "Sure, go ahead."
+   },
+   {
+    "s": "A",
+    "ja": "このデータはどこにありますか。",
+    "r": "この データ は どこ に あります か",
+    "en": "Where is this data?"
+   },
+   {
+    "s": "B",
+    "ja": "共有フォルダにありますよ。",
+    "r": "きょうゆう フォルダ に あります よ",
+    "en": "It's in the shared folder."
+   }
+  ]
+ },
+ {
+  "id": "labo-3",
+  "situation": "Au labo",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "お先に失礼します。",
+    "r": "おさきに しつれい します",
+    "en": "Excuse me for leaving before you."
+   },
+   {
+    "s": "B",
+    "ja": "お疲れさまでした。",
+    "r": "おつかれさま でした",
+    "en": "Thanks for your hard work today."
+   },
+   {
+    "s": "A",
+    "ja": "また明日。",
+    "r": "また あした",
+    "en": "See you tomorrow."
+   }
+  ]
+ },
+ {
+  "id": "quotidien-1",
+  "situation": "Au quotidien",
+  "lines": [
+   {
+    "s": "B",
+    "ja": "明日の朝、何時に来ますか。",
+    "r": "あした の あさ なんじ に きます か",
+    "en": "What time are you coming tomorrow morning?"
+   },
+   {
+    "s": "A",
+    "ja": "すみません、もう一度お願いします。",
+    "r": "すみません もう いちど おねがい します",
+    "en": "Sorry, could you say that again?"
+   },
+   {
+    "s": "B",
+    "ja": "明日の朝、何時に来ますか。",
+    "r": "あした の あさ なんじ に きます か",
+    "en": "What time are you coming tomorrow morning?"
+   },
+   {
+    "s": "A",
+    "ja": "九時に来ます。",
+    "r": "くじ に きます",
+    "en": "I'll come at nine."
+   }
+  ]
+ },
+ {
+  "id": "quotidien-2",
+  "situation": "Au quotidien",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "すみません、ゆっくり話してください。",
+    "r": "すみません ゆっくり はなして ください",
+    "en": "Sorry, please speak slowly."
+   },
+   {
+    "s": "B",
+    "ja": "はい。英語は話せますか。",
+    "r": "はい えいご は はなせます か",
+    "en": "Sure. Can you speak English?"
+   },
+   {
+    "s": "A",
+    "ja": "はい、少し話せます。",
+    "r": "はい すこし はなせます",
+    "en": "Yes, a little."
+   }
+  ]
+ },
+ {
+  "id": "quotidien-3",
+  "situation": "Au quotidien",
+  "lines": [
+   {
+    "s": "A",
+    "ja": "いただきます。",
+    "r": "いただきます",
+    "en": "Thank you for the food. (said before eating)"
+   },
+   {
+    "s": "B",
+    "ja": "どうぞ、たくさん食べてください。",
+    "r": "どうぞ たくさん たべて ください",
+    "en": "Go ahead, please eat a lot."
+   },
+   {
+    "s": "A",
+    "ja": "とてもおいしいです。",
+    "r": "とても おいしい です",
+    "en": "It's very delicious."
+   }
+  ]
+ }
+]

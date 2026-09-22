@@ -2,7 +2,7 @@ import { toRomaji, toHiragana } from 'wanakana'
 
 const MORA = /っ?[^ゃゅょぁぃぅぇぉ][ゃゅょぁぃぅぇぉ]?|ー/g
 const LONG = { a: 'â', i: 'î', ou: 'oû', é: 'ê', o: 'ô' }
-const SPECIAL = { てぃ: 'ti', でぃ: 'di' }
+const SPECIAL = { てぃ: 'ti', でぃ: 'di', ふぁ: 'fa', ふぃ: 'fi', ふぇ: 'fe', ふぉ: 'fo' }
 const EXTENDS = { a: 'あ', i: 'い', ou: 'う', é: 'えい', o: 'おう' }
 
 function syllable(mora) {
@@ -37,4 +37,18 @@ export function toFrench(kana) {
     }
   }
   return out.join('-')
+}
+
+const PARTICLES = { は: 'wa', へ: 'é', を: 'o' }
+
+function tokenToFrench(token) {
+  const french = toFrench(token)
+  return /[でま]す$/.test(token) ? french.replace(/(é?)-sou$/, (_, e) => (e ? 'èss' : 'ss')) : french
+}
+
+export function sentenceToFrench(reading) {
+  return reading
+    .split(' ')
+    .map((token) => PARTICLES[token] ?? tokenToFrench(token))
+    .join(' ')
 }

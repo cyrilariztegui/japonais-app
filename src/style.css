@@ -185,7 +185,8 @@ header {
 
 .tabs {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
   padding: 0.25rem;
   border: 1px solid var(--line);
   border-radius: 0.75rem;
@@ -275,5 +276,45 @@ header {
 
 .backup .close {
   padding: 0.5rem;
+  color: var(--muted);
+}
+
+.pair {
+  grid-template-columns: 1fr 1fr;
+}
+
+.situation {
+  text-align: center;
+  color: var(--muted);
+}
+
+.prev {
+  display: grid;
+  gap: 0.25rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--line);
+  line-height: 1.5;
+}
+
+.prev-en {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.replay {
+  justify-self: center;
+  padding: 1.25rem 2rem;
+  font-size: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.sentence {
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+.listening .reading {
+  font-size: 1.125rem;
   color: var(--muted);
 }

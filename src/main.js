@@ -1,7 +1,8 @@
 import './style.css'
 import { speak, canSpeak } from './audio.js'
-import { toFrench } from './phonetic.js'
+import { toFrench, sentenceToFrench } from './phonetic.js'
 import { hiraganaCards, katakanaCards } from './kana.js'
+import { listeningCards } from './listening.js'
 import { loadProgress, saveProgress, exportProgress, importProgress, backupIsStale } from './storage.js'
 import { nextCard, preview, grade, formatDelay } from './srs.js'
 
@@ -10,14 +11,15 @@ let progress = loadProgress()
 const decks = [
   { id: 'hiragana', label: 'Hiragana', cards: hiraganaCards },
   { id: 'katakana', label: 'Katakana', cards: katakanaCards },
-  { id: 'vocab', label: 'Vocabulaire', cards: [] },
+  { id: 'vocab', label: 'Mots', cards: [] },
+  { id: 'listening', label: 'Écoute', cards: [] },
 ]
 let deck = decks.find((d) => d.id === progress.deck) ?? decks[0]
 let session = null
 let revealed = false
 
-async function loadVocab() {
-  const res = await fetch(`${import.meta.env.BASE_URL}data/vocab.json`)
+async function loadData(name) {
+  const res = await fetch(`${import.meta.env.BASE_URL}data/${name}.json`)
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
   return res.json()
 }
@@ -26,6 +28,12 @@ function advance() {
   session = nextCard(deck.cards, deck.id, progress)
   revealed = false
   render()
+  if (session.card?.listen) speakCard()
+}
+
+function speakCard(rate) {
+  const { listen, w, r, speaker } = session.card
+  listen ? speak(w, { rate, speaker }) : speak(r, { rate })
 }
 
 function header() {
@@ -57,7 +65,27 @@ function answer() {
     </section>`
 }
 
+function listeningBody() {
+  const { situation, prev, w, r, m } = session.card
+  return `
+    <main class="card listening">
+      <p class="situation">${situation}</p>
+      ${prev ? `<p class="prev"><span lang="ja">${prev.ja}</span><span class="prev-en">${prev.en}</span></p>` : ''}
+      <button class="replay">Réécouter</button>
+      ${revealed ? `
+        <section class="answer">
+          <p class="sentence" lang="ja">${w}</p>
+          <p class="reading" lang="ja">${r}</p>
+          <p class="romaji">${sentenceToFrench(r)}</p>
+          <p class="meaning">${m[0]}</p>
+        </section>` : ''}
+    </main>`
+}
+
 function actions() {
+  if (!revealed && session.card.listen) {
+    return '<nav class="actions pair"><button class="slow">Plus lentement</button><button class="reveal">Voir la réponse</button></nav>'
+  }
   if (!revealed) return '<nav class="actions"><button class="reveal">Voir la réponse</button></nav>'
   const options = preview(progress.cards[session.card.id])
   return `<nav class="actions grades">${options
@@ -75,6 +103,10 @@ function render() {
       </main>`
     return
   }
+  if (session.card.listen) {
+    app.innerHTML = `${header()}${listeningBody()}${actions()}`
+    return
+  }
   app.innerHTML = `
     ${header()}
     <main class="card">
@@ -90,7 +122,7 @@ function render() {
 function reveal() {
   revealed = true
   render()
-  speak(session.card.r)
+  speakCard()
 }
 
 app.addEventListener('click', (e) => {
@@ -103,7 +135,9 @@ app.addEventListener('click', (e) => {
     progress.deck = deck.id
     saveProgress(progress)
     advance()
-  } else if (btn.matches('.face')) revealed ? speak(session.card.r) : reveal()
+  } else if (btn.matches('.face')) revealed ? speakCard() : reveal()
+  else if (btn.matches('.replay')) speakCard()
+  else if (btn.matches('.slow')) speakCard(0.6)
   else if (btn.matches('.reveal')) reveal()
   else if (btn.matches('.example')) speak(btn.textContent)
   else if (btn.matches('.grade')) {
@@ -160,11 +194,12 @@ backup.querySelector('input').addEventListener('change', async (e) => {
   }
 })
 
-loadVocab()
-  .then((vocab) => {
+Promise.all([loadData('vocab'), loadData('dialogues')])
+  .then(([vocab, dialogues]) => {
     decks.find((d) => d.id === 'vocab').cards = vocab
+    decks.find((d) => d.id === 'listening').cards = listeningCards(dialogues)
     advance()
   })
   .catch((err) => {
-    app.innerHTML = `<p class="error">Impossible de charger le vocabulaire (${err.message}). Vérifiez la connexion puis rechargez la page.</p>`
+    app.innerHTML = `<p class="error">Impossible de charger les données (${err.message}). Vérifiez la connexion puis rechargez la page.</p>`
   })
