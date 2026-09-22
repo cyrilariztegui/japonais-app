@@ -139,3 +139,9 @@ button:focus-visible {
   align-self: center;
   line-height: 1.5;
 }
+
+.romaji {
+  color: var(--muted);
+  font-size: 1.125rem;
+  letter-spacing: 0.02em;
+}

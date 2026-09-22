@@ -1,5 +1,6 @@
 import './style.css'
 import { speak, canSpeak } from './audio.js'
+import { toFrench } from './phonetic.js'
 
 const app = document.querySelector('#app')
 let cards = []
@@ -24,6 +25,7 @@ function answer() {
   return `
     <section class="answer">
       ${r !== w ? `<p class="reading" lang="ja">${r}</p>` : ''}
+      <p class="romaji">${toFrench(r)}</p>
       <p class="meaning">${m.join(', ')}</p>
       ${example ? `
         <button class="example" lang="ja">${example.ja}</button>
