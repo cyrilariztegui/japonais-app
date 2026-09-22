@@ -1,11 +1,22 @@
 const KEY = 'progress:v1'
 
+const DEFAULT_SETTINGS = { newPerDay: 10, phonetic: true, autoplay: true }
+
+function withDefaults(progress) {
+  return {
+    daily: { date: '', new: {} },
+    days: [],
+    ...progress,
+    settings: { ...DEFAULT_SETTINGS, ...progress.settings },
+  }
+}
+
 export function loadProgress() {
   try {
     const saved = JSON.parse(localStorage.getItem(KEY))
-    if (saved?.cards) return saved
+    if (saved?.cards) return withDefaults(saved)
   } catch {}
-  return { cards: {}, daily: { date: '', new: {} }, deck: 'hiragana' }
+  return withDefaults({ cards: {} })
 }
 
 export function saveProgress(progress) {
@@ -37,6 +48,7 @@ export async function exportProgress(progress) {
 export async function importProgress(file) {
   const data = JSON.parse(await file.text())
   if (!data?.cards || typeof data.cards !== 'object') throw new Error('ce fichier n\'est pas une sauvegarde de l\'app')
-  saveProgress(data)
-  return data
+  const progress = withDefaults(data)
+  saveProgress(progress)
+  return progress
 }

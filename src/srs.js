@@ -1,6 +1,5 @@
 import { fsrs, generatorParameters, createEmptyCard, Rating } from 'ts-fsrs'
 
-export const NEW_PER_DAY = 10
 const LEARN_AHEAD_MS = 20 * 60 * 1000
 const scheduler = fsrs(generatorParameters({ enable_fuzz: true }))
 
@@ -20,10 +19,11 @@ function newToday(progress, deckId) {
 
 export function nextCard(deck, deckId, progress, now = new Date()) {
   const newCount = newToday(progress, deckId)
+  const limit = progress.settings.newPerDay
   const seen = deck.filter((c) => progress.cards[c.id])
   const byDue = (a, b) => new Date(progress.cards[a.id].due) - new Date(progress.cards[b.id].due)
   const due = seen.filter((c) => new Date(progress.cards[c.id].due) <= now).sort(byDue)
-  const fresh = newCount < NEW_PER_DAY ? deck.find((c) => !progress.cards[c.id]) : null
+  const fresh = newCount < limit ? deck.find((c) => !progress.cards[c.id]) : null
   const soon = seen
     .filter((c) => new Date(progress.cards[c.id].due) - now < LEARN_AHEAD_MS)
     .sort(byDue)
@@ -31,7 +31,8 @@ export function nextCard(deck, deckId, progress, now = new Date()) {
   return {
     card: due[0] ?? fresh ?? soon[0] ?? null,
     dueCount: due.length,
-    newLeft: fresh ? NEW_PER_DAY - newCount : 0,
+    newLeft: fresh ? limit - newCount : 0,
+    seen: seen.length,
   }
 }
 
@@ -44,6 +45,19 @@ export function grade(card, deckId, progress, rating, now = new Date()) {
   const state = progress.cards[card.id]
   if (!state) progress.daily.new[deckId] = newToday(progress, deckId) + 1
   progress.cards[card.id] = scheduler.next(state ?? createEmptyCard(now), now, rating).card
+  if (progress.days.at(-1) !== today()) progress.days.push(today())
+}
+
+export function streak(progress) {
+  const days = new Set(progress.days)
+  const cursor = new Date()
+  if (!days.has(today())) cursor.setDate(cursor.getDate() - 1)
+  let count = 0
+  while (days.has(cursor.toLocaleDateString('sv'))) {
+    count += 1
+    cursor.setDate(cursor.getDate() - 1)
+  }
+  return count
 }
 
 export function formatDelay(due, now = new Date()) {
