@@ -68,6 +68,23 @@ export function homeView({ decks, stats, streak, total }) {
     </main>`
 }
 
+const ruby = ([w, r]) => (w === r ? w : `<ruby>${w}<rt>${r}</rt></ruby>`)
+
+function formsTable(f) {
+  const rows = [
+    ['Présent', f[1], f[0]],
+    ['Négatif', f[4], f[2]],
+    ['Passé', f[5], f[3]],
+  ]
+  return `
+    <table class="forms">
+      <thead><tr><th></th><th>Poli</th><th>Neutre</th></tr></thead>
+      <tbody>${rows
+        .map(([label, polite, plain]) => `<tr><th>${label}</th><td lang="ja">${ruby(polite)}</td><td lang="ja">${ruby(plain)}</td></tr>`)
+        .join('')}</tbody>
+    </table>`
+}
+
 function wordFace(card, revealed, settings) {
   const { w, r, m, ex } = card
   const example = ex?.[0]
@@ -79,6 +96,7 @@ function wordFace(card, revealed, settings) {
       ${r !== w ? `<p class="reading" lang="ja">${r}</p>` : ''}
       ${settings.phonetic ? `<p class="phonetic">${toFrench(r)}</p>` : ''}
       ${m.length ? `<i class="rule"></i><p class="meaning">${m.join(', ')}</p>` : ''}
+      ${card.f ? formsTable(card.f) : ''}
       ${example ? `
         <button class="example">
           <span lang="ja">${example.ja}</span>
