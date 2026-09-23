@@ -23,6 +23,7 @@ const decks = [
   { id: 'hiragana', label: 'Hiragana', cards: hiraganaCards },
   { id: 'katakana', label: 'Katakana', cards: katakanaCards },
   { id: 'vocab', label: 'Mots', cards: [] },
+  { id: 'kanji', label: 'Kanji', cards: [] },
   { id: 'listening', label: 'Écoute', cards: [] },
 ]
 const state = { view: 'home', scope: [], current: null, revealed: false, done: 0, message: '', recognition: { status: 'idle' } }
@@ -137,6 +138,7 @@ async function onClick(btn) {
   if (btn.matches('.slow')) return speakCard(0.6)
   if (btn.matches('.repeat')) return repeat()
   if (btn.matches('.example')) return speak(btn.querySelector('[lang]').textContent)
+  if (btn.matches('.kanji-word')) return speak(btn.dataset.r)
   if (btn.matches('.grade')) {
     grade(state.current.card, state.current.deck.id, progress, Number(btn.dataset.rating))
     saveProgress(progress)
@@ -186,9 +188,10 @@ app.addEventListener('change', async (e) => {
   render()
 })
 
-Promise.all([loadData('vocab'), loadData('dialogues')])
-  .then(([vocab, dialogues]) => {
+Promise.all([loadData('vocab'), loadData('kanji'), loadData('dialogues')])
+  .then(([vocab, kanji, dialogues]) => {
     decks.find((d) => d.id === 'vocab').cards = vocab
+    decks.find((d) => d.id === 'kanji').cards = kanji
     decks.find((d) => d.id === 'listening').cards = listeningCards(dialogues)
     render()
   })

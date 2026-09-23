@@ -19,6 +19,7 @@ const DECK_INFO = {
   hiragana: { glyph: 'あ', subtitle: "L'alphabet de base" },
   katakana: { glyph: 'ア', subtitle: 'Mots étrangers' },
   vocab: { glyph: '単語', subtitle: 'Vocabulaire N5 par fréquence' },
+  kanji: { glyph: '漢', subtitle: 'Les 79 kanji du N5' },
   listening: { glyph: '音', subtitle: 'Dialogues du quotidien' },
 }
 
@@ -104,6 +105,31 @@ function wordFace(card, revealed, settings) {
         </button>` : ''}` : '<p class="hint">Touche le caractère pour voir la réponse</p>'}`
 }
 
+function readingRow(label, readings, settings) {
+  if (!readings.length) return ''
+  const items = readings
+    .map((r) => `<span><span lang="ja">${r}</span>${settings.phonetic ? `<small>${toFrench(r.replace(/[()]/g, ''))}</small>` : ''}</span>`)
+    .join('')
+  return `<div class="kanji-reading"><p>${label}</p><div>${items}</div></div>`
+}
+
+function kanjiFace(card, revealed, settings) {
+  const { w, m, on, kun, words } = card
+  return `
+    <button class="face" aria-label="Voir la réponse" ${revealed ? 'disabled' : ''}>
+      <span class="glyph" lang="ja">${w}</span>
+    </button>
+    ${revealed ? `
+      <p class="meaning">${m.join(', ')}</p>
+      <i class="rule"></i>
+      ${readingRow('Lecture japonaise', kun, settings)}
+      ${readingRow("Lecture d'origine chinoise", on, settings)}
+      ${words.length ? `
+        <ul class="kanji-words">${words
+          .map((x) => `<li><button class="kanji-word" data-r="${x.r}"><span lang="ja">${ruby([x.w, x.r])}</span><span>${x.m}</span></button></li>`)
+          .join('')}</ul>` : ''}` : '<p class="hint">Touche le kanji pour voir la réponse</p>'}`
+}
+
 function listeningFace(card, revealed, settings, recognition) {
   const { prev, w, r, m } = card
   return `
@@ -154,7 +180,7 @@ export function sessionView({ deck, card, revealed, done, remaining, options, se
           <span class="chip">${chip}</span>
           <button class="listen">${icons.sound}<span>Écouter</span></button>
         </div>
-        ${card.listen ? listeningFace(card, revealed, settings, recognition) : wordFace(card, revealed, settings)}
+        ${card.listen ? listeningFace(card, revealed, settings, recognition) : card.kanji ? kanjiFace(card, revealed, settings) : wordFace(card, revealed, settings)}
       </article>
     </main>
     ${answerBar(card, revealed, options)}`

@@ -790,6 +790,74 @@ button:disabled {
   color: var(--muted);
 }
 
+.kanji-reading {
+  display: grid;
+  gap: 0.35rem;
+  align-self: stretch;
+  text-align: left;
+}
+
+.kanji-reading > p {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.kanji-reading > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.kanji-reading > div > span {
+  display: grid;
+  padding: 0.35rem 0.75rem;
+  font-size: 1.125rem;
+  background: var(--surface-low);
+  border-radius: 0.5rem;
+}
+
+.kanji-reading small {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.kanji-words {
+  display: grid;
+  gap: 0.5rem;
+  align-self: stretch;
+  margin-top: 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.kanji-word {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  text-align: left;
+  background: var(--surface-low);
+  border-radius: 0.5rem;
+}
+
+.kanji-word [lang] {
+  font-size: 1.25rem;
+}
+
+.kanji-word > span:last-child {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+.kanji-word rt {
+  font-size: 0.5em;
+  color: var(--muted);
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
