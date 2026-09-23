@@ -6,6 +6,7 @@ import ipadic
 import MeCab
 from openjlpt import get_vocab
 from wordfreq import zipf_frequency
+from conjugation import conjugate
 
 OUT = Path(__file__).resolve().parent.parent / "public" / "data" / "vocab.json"
 TAGGER = MeCab.Tagger(ipadic.MECAB_ARGS)
@@ -36,6 +37,9 @@ def to_card(v, max_examples):
     card = {"id": f"{v.word}|{reading}", "w": v.word, "r": reading, "m": v.meanings}
     forms = {v.word, reading}
     examples = [e for e in (v.examples or []) if contains_word(e.ja, forms)][:max_examples]
+    forms = conjugate(v.word, reading, v.meanings)
+    if forms:
+        card["f"] = forms
     if examples:
         card["ex"] = [{"ja": e.ja, "en": e.en} for e in examples]
     return card
